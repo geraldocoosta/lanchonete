@@ -28,7 +28,6 @@ public class UserResource {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
 
-		
 		return Response.ok(new UserDTO(usuarioBuscado)).cookie(CookieUtil.createCookieLogin()).build();
 	}
 

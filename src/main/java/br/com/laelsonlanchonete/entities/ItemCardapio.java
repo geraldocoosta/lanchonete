@@ -23,5 +23,5 @@ public class ItemCardapio extends PanacheEntityBase {
 	public List<Produto> produtos;
 	public String nome;
 	public BigDecimal valorItem;
-	public LocalDateTime dataHora;
+	public LocalDateTime dataHoraCadastro;
 }

@@ -1,5 +1,7 @@
 package br.com.laelsonlanchonete.resources;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 
 import javax.enterprise.context.RequestScoped;
@@ -16,15 +18,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import br.com.laelsonlanchonete.entities.Cliente;
+import br.com.laelsonlanchonete.entities.Andamentos;
 import br.com.laelsonlanchonete.utils.Authorization;
 import io.vertx.core.http.HttpServerRequest;
 
-@Path("cliente")
+@Path("andamento")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
-public class ClienteResource {
+public class AndamentoResource {
 
 	@Context
 	HttpServerRequest request;
@@ -34,49 +36,45 @@ public class ClienteResource {
 		if (Authorization.isAuthorized(request)) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
-		return Response.ok(Cliente.listAll()).build();
+		return Response.ok(Andamentos.listAll()).build();
 	}
 
 	@POST
 	@Transactional
-	public Response createCliente(Cliente cliente) {
+	public Response createAndamento(Andamentos andamento) {
 		if (Authorization.isAuthorized(request)) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
-		cliente.id = null;
-		if (cliente.enderecoCliente != null){
-			cliente.enderecoCliente.id = null;
-		}
-		cliente.persist();
-		return Response.ok(cliente).build();
+		andamento.id = null;
+		andamento.dataHora = LocalDateTime.now(ZoneId.systemDefault());
+		andamento.persist();
+		return Response.ok(andamento).build();
 	}
 
 	@PUT
 	@Transactional
-	public Response modificaCliente(Cliente cliente) {
+	public Response modificaAndamento(Andamentos andamento) {
 		if (Authorization.isAuthorized(request)) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
-		Optional<Cliente> clienteOptional = Cliente.findByIdOptional(cliente.id);
-		if (!clienteOptional.isPresent()) {
+		Optional<Andamentos> andamentoOptional = Andamentos.findByIdOptional(andamento.id);
+		if (!andamentoOptional.isPresent()) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
-		Cliente clienteParaAlterar = clienteOptional.get();
+		Andamentos andamentoParaAlterar = andamentoOptional.get();
 
-		clienteParaAlterar.nomeCliente = cliente.nomeCliente;
-		clienteParaAlterar.telefoneCliente = cliente.telefoneCliente;
-		clienteParaAlterar.enderecoCliente = cliente.enderecoCliente;
+		andamentoParaAlterar.descricao = andamento.descricao;
 		
-		return Response.ok(cliente).build();
+		return Response.ok(andamento).build();
 	}
 	
 	@DELETE
 	@Transactional
-	public Response apagarCliente(Integer id) {
+	public Response apagarAndamento(Integer id) {
 		if (Authorization.isAuthorized(request)) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
-		Cliente.delete("id", id);
+		Andamentos.delete("id", id);
 		return Response.ok().build();
 	}
 

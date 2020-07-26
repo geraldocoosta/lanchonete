@@ -1,6 +1,7 @@
 package br.com.laelsonlanchonete.entities;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -27,5 +28,6 @@ public class Pedido extends PanacheEntityBase {
 	@Enumerated(EnumType.STRING)
 	public TipoEntraga tipoEntrega;
 	public BigDecimal valorTotal;
+	public LocalDateTime dataHoraPedido;
 
 }

@@ -18,6 +18,8 @@ public class MaterialCarga extends PanacheEntityBase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer id;
+	public String nome;
+	public Integer quantidade;
 	@ManyToMany
 	public List<Andamentos> andamentos;
 	public LocalDateTime dataCadastro;

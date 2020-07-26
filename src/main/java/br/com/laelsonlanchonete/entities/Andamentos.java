@@ -17,6 +17,6 @@ public class Andamentos extends PanacheEntityBase {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer id;
 	public LocalDateTime dataHora;
-	public String andamento;
+	public String descricao;
 
 }

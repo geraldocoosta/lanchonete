@@ -1,5 +1,7 @@
 package br.com.laelsonlanchonete.resources;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 
 import javax.enterprise.context.RequestScoped;
@@ -16,15 +18,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import br.com.laelsonlanchonete.entities.Cliente;
+import br.com.laelsonlanchonete.entities.Categoria;
 import br.com.laelsonlanchonete.utils.Authorization;
 import io.vertx.core.http.HttpServerRequest;
 
-@Path("cliente")
+@Path("categoria")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
-public class ClienteResource {
+public class CategoriaResource {
 
 	@Context
 	HttpServerRequest request;
@@ -34,49 +36,45 @@ public class ClienteResource {
 		if (Authorization.isAuthorized(request)) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
-		return Response.ok(Cliente.listAll()).build();
+		return Response.ok(Categoria.listAll()).build();
 	}
 
 	@POST
 	@Transactional
-	public Response createCliente(Cliente cliente) {
+	public Response createCategoria(Categoria categoria) {
 		if (Authorization.isAuthorized(request)) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
-		cliente.id = null;
-		if (cliente.enderecoCliente != null){
-			cliente.enderecoCliente.id = null;
-		}
-		cliente.persist();
-		return Response.ok(cliente).build();
+		categoria.id = null;
+		categoria.dataHoraCadastro = LocalDateTime.now(ZoneId.systemDefault());
+		categoria.persist();
+		return Response.ok(categoria).build();
 	}
 
 	@PUT
 	@Transactional
-	public Response modificaCliente(Cliente cliente) {
+	public Response modificaCategoria(Categoria categoria) {
 		if (Authorization.isAuthorized(request)) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
-		Optional<Cliente> clienteOptional = Cliente.findByIdOptional(cliente.id);
-		if (!clienteOptional.isPresent()) {
+		Optional<Categoria> categoriaOptional = Categoria.findByIdOptional(categoria.id);
+		if (!categoriaOptional.isPresent()) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
-		Cliente clienteParaAlterar = clienteOptional.get();
+		Categoria categoriaParaAlterar = categoriaOptional.get();
 
-		clienteParaAlterar.nomeCliente = cliente.nomeCliente;
-		clienteParaAlterar.telefoneCliente = cliente.telefoneCliente;
-		clienteParaAlterar.enderecoCliente = cliente.enderecoCliente;
+		categoriaParaAlterar.nome = categoria.nome;
 		
-		return Response.ok(cliente).build();
+		return Response.ok(categoria).build();
 	}
 	
 	@DELETE
 	@Transactional
-	public Response apagarCliente(Integer id) {
+	public Response apagarCategoria(Integer id) {
 		if (Authorization.isAuthorized(request)) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
-		Cliente.delete("id", id);
+		Categoria.delete("id", id);
 		return Response.ok().build();
 	}
 
