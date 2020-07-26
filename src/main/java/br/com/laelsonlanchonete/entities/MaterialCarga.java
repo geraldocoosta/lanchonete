@@ -22,5 +22,5 @@ public class MaterialCarga extends PanacheEntityBase {
 	public Integer quantidade;
 	@ManyToMany
 	public List<Andamentos> andamentos;
-	public LocalDateTime dataCadastro;
+	public LocalDateTime dataHoraCadastro;
 }
