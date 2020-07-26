@@ -34,7 +34,7 @@ public class UserResource {
 	@POST
 	@Path("logout")
 	public Response logout() {
-		return Response.ok().header("LOGIN", false).build();
+		return Response.ok().cookie(CookieUtil.createCookieLoggout()).build();
 	}
 
 }
