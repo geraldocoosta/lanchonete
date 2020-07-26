@@ -12,14 +12,14 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 @Entity
 @Table(name = "endereco")
 public class Endereco extends PanacheEntityBase {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
-    public String logradouro;
-    public String bairro;
-    public String numero;
-    public String complemento;
-    public String cidade;
-    public Estados estado;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public Integer id;
+	public String logradouro;
+	public String bairro;
+	public String numero;
+	public String complemento;
+	public String cidade;
+	public Estados estado;
 
 }

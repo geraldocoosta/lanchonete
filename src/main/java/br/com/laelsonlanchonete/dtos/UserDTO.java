@@ -1,8 +1,14 @@
 package br.com.laelsonlanchonete.dtos;
 
+import br.com.laelsonlanchonete.entities.Usuario;
+
 public class UserDTO {
-	
-	public int id;
+
 	public String nome;
-	public String pass;
+	public boolean admin;
+	
+	public UserDTO(Usuario usuario) {
+		this.nome = usuario.nome;
+		this.admin = usuario.admin;
+	}
 }

@@ -7,18 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 @Entity
-@Table(name= "material-carga")
+@Table(name = "materialcarga")
 public class MaterialCarga extends PanacheEntityBase {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
-    @OneToMany
-    public List<Andamentos> andamentos;
-    public LocalDateTime dataCadastro;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public Integer id;
+	@ManyToMany
+	public List<Andamentos> andamentos;
+	public LocalDateTime dataCadastro;
 }

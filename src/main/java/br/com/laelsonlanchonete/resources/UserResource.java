@@ -9,15 +9,18 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import br.com.laelsonlanchonete.dtos.UserDTO;
 import br.com.laelsonlanchonete.entities.Usuario;
+import br.com.laelsonlanchonete.utils.CookieUtil;
 
 @Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
 public class UserResource {
-
+	
 	@POST
+	@Path("login")
 	public Response logar(Usuario usuario) {
 		Usuario usuarioBuscado = Usuario.find("nome", usuario.nome).firstResult();
 
@@ -25,9 +28,14 @@ public class UserResource {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
 
-		usuarioBuscado.pass = null;
-
-		return Response.ok(usuarioBuscado).header("LOGIN", true).build();
+		
+		return Response.ok(new UserDTO(usuarioBuscado)).cookie(CookieUtil.createCookieLogin()).build();
 	}
-	
+
+	@POST
+	@Path("logout")
+	public Response logout() {
+		return Response.ok().header("LOGIN", false).build();
+	}
+
 }

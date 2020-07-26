@@ -10,10 +10,10 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario extends PanacheEntityBase{
+public class Usuario extends PanacheEntityBase {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public Integer id;
 	public String nome;
 	public String pass;
 	public boolean admin;
